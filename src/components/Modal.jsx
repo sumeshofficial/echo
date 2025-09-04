@@ -8,7 +8,7 @@ import {
 } from "@headlessui/react";
 import { X } from "react-feather";
 
-export default function Signup({ open, onClose }) {
+export default function Modal({ open, onClose, children }) {
   return (
     <div>
       <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -25,25 +25,15 @@ export default function Signup({ open, onClose }) {
             >
               <button
                 onClick={onClose}
-                className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white "
+                className="absolute top-2 right-2 p-1 rounded-lg text-gray-400"
               >
                 <X />
               </button>
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-gray-800">
-                <div className="sm:flex sm:items-start">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-gray-800 ">
+                <div className="sm:flex sm:items-start justify-center">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <DialogTitle
-                      as="h1"
-                      className="text-4xl font-semibold text-gray-900 dark:text-white text-center pb-8"
-                    >
-                      Signup
-                    </DialogTitle>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Are you sure you want to deactivate your account? All of
-                        your data will be permanently removed. This action
-                        cannot be undone.
-                      </p>
+                    <div className="flex justify-center mt-2">
+                        {children}
                     </div>
                   </div>
                 </div>

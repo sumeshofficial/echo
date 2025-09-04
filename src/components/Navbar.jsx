@@ -15,14 +15,15 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import Signup from "./Signup";
+import { Link, useLocation } from "react-router";
+import Modal from "./Modal";
+import SingIn from "./SingIn";
 
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Team", href: "/team", current: false },
-  { name: "Projects", href: "/projects", current: false },
-  { name: "Calendar", href: "/calendar", current: false },
+  { name: "Dashboard", href: "/"},
+  { name: "Team", href: "/team"},
+  { name: "Projects", href: "/projects"},
+  { name: "Calendar", href: "/calendar"},
 ];
 
 function classNames(...classes) {
@@ -30,8 +31,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const location = useLocation();
   const [theme, setTheme] = useState("light");
-  const [showSignup, setShowSignup] = useState(false);
+  const [showModal, setModal] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -79,21 +81,24 @@ export default function Navbar() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      aria-current={item.current ? "page" : undefined}
-                      className={classNames(
-                        item.current
-                          ? "text-black bg-gray-300 dark:bg-gray-950/50 dark:text-white"
-                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-white/5 hover:text-gray-700 dark:hover:text-white",
-                        "rounded-md px-3 py-2 text-sm font-medium"
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {navigation.map((item) => {
+                    const isActive = location.pathname === item.href;
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        aria-current={item.current ? "page" : undefined}
+                        className={classNames(
+                          isActive
+                            ? "text-black bg-gray-300 dark:bg-gray-950/50 dark:text-white"
+                            : "text-gray-600 dark:text-gray-300 hover:bg-gray-300/50 dark:hover:bg-white/5 hover:text-gray-700 dark:hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium"
+                        )}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -153,7 +158,7 @@ export default function Navbar() {
                   </MenuItem>
                   <MenuItem>
                     <button
-                      onClick={() => setShowSignup(true)}
+                      onClick={() => setModal(true)}
                       type="button"
                       className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                     >
@@ -188,7 +193,11 @@ export default function Navbar() {
         </DisclosurePanel>
       </Disclosure>
       {/* Signup modal appears here */}
-      {showSignup && <Signup open={showSignup} onClose={() => setShowSignup(false)} />}
+      {showModal && (
+        <Modal open={showModal} onClose={() => setModal(false)} >
+          <SingIn />
+        </Modal>
+      )}
     </>
   );
 }
