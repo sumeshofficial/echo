@@ -1,9 +1,9 @@
 const SignInButtons = () => (
   <div className="mt-8 flex flex-col gap-y-4">
-    <button className="py-3 rounded-xl bg-violet-500 text-white text-lg font-bold hover:scale-[1.01] transition">
+    <button className="py-3 rounded-xl bg-violet-500 active:scale-[.98] active:duration-75 text-white text-lg font-bold hover:scale-[1.01] transition-all">
       Sign in
     </button>
-    <button className="flex py-3 rounded-xl border-2 border-gray-100 dark:border-gray-500 items-center justify-center gap-2 dark:text-white hover:scale-[1.01] transition">
+    <button className="flex py-3 active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all rounded-xl border-2 border-gray-100 dark:border-gray-500 items-center justify-center gap-2 dark:text-white">
       {/* Google SVG */}
       <svg
         width="24"
