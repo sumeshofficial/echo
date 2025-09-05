@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 const SingIn = ({ switchMode }) => {
   const [showPassword, setShowPassword] = useState(false);
+  
   return (
     <div className="my-5">
       <h1 className="text-5xl font-semibold dark:text-white">Welcome Back</h1>

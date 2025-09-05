@@ -17,8 +17,8 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import Modal from "./Modal";
-import SingIn from "./SingIn";
-import SingUp from "./SignUp";
+import SingIn from "./Auth/SignIn/SingIn";
+import SingUp from "./Auth/SignUp/SignUp";
 
 const navigation = [
   { name: "Dashboard", href: "/" },
