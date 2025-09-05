@@ -18,12 +18,13 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import Modal from "./Modal";
 import SingIn from "./SingIn";
+import SingUp from "./SignUp";
 
 const navigation = [
-  { name: "Dashboard", href: "/"},
-  { name: "Team", href: "/team"},
-  { name: "Projects", href: "/projects"},
-  { name: "Calendar", href: "/calendar"},
+  { name: "Dashboard", href: "/" },
+  { name: "Team", href: "/team" },
+  { name: "Projects", href: "/projects" },
+  { name: "Calendar", href: "/calendar" },
 ];
 
 function classNames(...classes) {
@@ -34,6 +35,7 @@ export default function Navbar() {
   const location = useLocation();
   const [theme, setTheme] = useState("light");
   const [showModal, setModal] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -158,11 +160,26 @@ export default function Navbar() {
                   </MenuItem>
                   <MenuItem>
                     <button
-                      onClick={() => setModal(true)}
+                      onClick={() => {
+                        setAuthMode("signup");
+                        setModal(true);
+                      }}
                       type="button"
                       className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                     >
-                      Signup
+                      Sign up
+                    </button>
+                  </MenuItem>
+                  <MenuItem>
+                    <button
+                      onClick={() => {
+                        setAuthMode("signin");
+                        setModal(true);
+                      }}
+                      type="button"
+                      className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                    >
+                      Sign in
                     </button>
                   </MenuItem>
                 </MenuItems>
@@ -194,8 +211,12 @@ export default function Navbar() {
       </Disclosure>
       {/* Signup modal appears here */}
       {showModal && (
-        <Modal open={showModal} onClose={() => setModal(false)} >
-          <SingIn />
+        <Modal open={showModal} onClose={() => setModal(false)}>
+          {authMode === "signin" ? (
+            <SingIn switchMode={() => setAuthMode("signup")} />
+          ) : (
+            <SingUp switchMode={() => setAuthMode("signin")} />
+          )}
         </Modal>
       )}
     </>

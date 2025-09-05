@@ -1,15 +1,28 @@
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
-const SingIn = ({ switchMode }) => {
-  const [showPassword, setShowPassword] = useState(false);
+const SingUp = ({ switchMode }) => {
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   return (
     <div className="my-5">
-      <h1 className="text-5xl font-semibold dark:text-white">Welcome Back</h1>
+      <h1 className="text-5xl font-semibold dark:text-white">Welcome</h1>
       <p className="font-medium text-lg text-gray-400 mt-4">
-        Welcome back! Please enter your details.
+        Welcome! Please enter your details.
       </p>
       <div className="mt-8">
+        <div>
+          <label className="text-lg font-medium dark:text-white" htmlFor="name">
+            Name
+          </label>
+          <input
+            className="w-full border-2 border-gray-100 dark:border-gray-500 rounded-xl p-4 mt-1 bg-transparent dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+          />
+        </div>
         <div>
           <label
             className="text-lg font-medium dark:text-white"
@@ -35,17 +48,17 @@ const SingIn = ({ switchMode }) => {
           <div className="relative">
             <input
               className="w-full border-2 border-gray-100 dark:border-gray-500 rounded-xl p-4 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-500 bg-transparent dark:text-white"
-              type={showPassword ? "text" : "password"}
+              type={showPassword1 ? "text" : "password"}
               name="password"
               id="password"
               placeholder="Password"
             />
             <button
               type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
+              onClick={() => setShowPassword1((prev) => !prev)}
               className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
             >
-              {showPassword ? (
+              {showPassword1 ? (
                 <EyeOff className="w-5 h-5" />
               ) : (
                 <Eye className="w-5 h-5" />
@@ -53,14 +66,37 @@ const SingIn = ({ switchMode }) => {
             </button>
           </div>
         </div>
-        <div className="mt-3 flex justify-end">
-          <button className="font-medium text-base text-violet-500">
-            Forgot password?
-          </button>
+        <div>
+          <label
+            className="text-lg font-medium dark:text-white"
+            htmlFor="confirm-password"
+          >
+            Confirm Password
+          </label>
+          <div className="relative">
+            <input
+              className="w-full border-2 border-gray-100 dark:border-gray-500 rounded-xl p-4 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-500 bg-transparent dark:text-white"
+              type={showPassword2 ? "text" : "password"}
+              name="confirm-password"
+              id="confirm-password"
+              placeholder="Confirm Password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword2((prev) => !prev)}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+            >
+              {showPassword2 ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="mt-8 flex flex-col gap-y-4">
           <button className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold">
-            Sign in
+            Sign up
           </button>
           <button className="flex py-3 rounded-xl border-2 border-gray-100 dark:border-gray-500 items-center justify-center gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all dark:text-white">
             <svg
@@ -87,18 +123,18 @@ const SingIn = ({ switchMode }) => {
                 fill="#FBBC05"
               />
             </svg>
-            Sign in with Google
+            Sign up with Google
           </button>
         </div>
         <div className="flex mt-8 justify-center items-center">
           <p className="font-medium text-base dark:text-white">
-            Don't have an accout?
+            Already have an account?
           </p>
           <button
             onClick={switchMode}
             className="text-violet-500 text-base font-medium ml-2"
           >
-            Sign up
+            Sign in
           </button>
         </div>
       </div>
@@ -106,4 +142,4 @@ const SingIn = ({ switchMode }) => {
   );
 };
 
-export default SingIn;
+export default SingUp;
