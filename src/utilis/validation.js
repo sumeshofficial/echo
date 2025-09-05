@@ -1,4 +1,4 @@
-const validate = (data) => {
+export const signInValidate = (data) => {
   const validationErrors = {};
 
   if (!data.username.trim()) {
@@ -46,4 +46,3 @@ const validate = (data) => {
   return validationErrors;
 };
 
-export default validate;
