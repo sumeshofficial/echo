@@ -4,7 +4,7 @@ import PasswordField from "./PasswordField";
 import SignUpHeader from "./SignUpHeader";
 import SignUpButtons from "./SignUpButtons";
 import SignUpFooter from "./SignUpFooter";
-import {signInValidate} from "../../../utilis/validation";
+import {signUpValidate} from "../../../utilis/validation";
 
 const SignUp = ({ switchMode }) => {
   const [formData, setFormData] = useState({
@@ -20,12 +20,12 @@ const SignUp = ({ switchMode }) => {
     const { name, value } = e.target;
     const updatedForm = { ...formData, [name]: value };
     setFormData(updatedForm);
-    setErrors(signInValidate(updatedForm));
+    setErrors(signUpValidate(updatedForm));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = signInValidate(formData);
+    const validationErrors = signUpValidate(formData);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       alert("Form submitted successfully ✅");

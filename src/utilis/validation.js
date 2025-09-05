@@ -1,4 +1,4 @@
-export const signInValidate = (data) => {
+export const signUpValidate = (data) => {
   const validationErrors = {};
 
   if (!data.username.trim()) {
@@ -46,3 +46,16 @@ export const signInValidate = (data) => {
   return validationErrors;
 };
 
+export const signInValidate = (data) => {
+  const validationErrors = {};
+
+  if (!data.email.trim()) {
+    validationErrors.email = "Email is required";
+  }
+
+  if (!data.password.trim()) {
+    validationErrors.password = "Password is required";
+  }
+
+  return validationErrors;
+};
