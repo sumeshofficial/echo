@@ -2,18 +2,23 @@ import { useState } from "react";
 import InputField from "./InputField";
 import PasswordField from "./PasswordField";
 import SignUpHeader from "./SignUpHeader";
-import SignUpButtons from "./SignUpButtons";
+import SignUpButton from "./SignUpButton";
 import SignUpFooter from "./SignUpFooter";
-import {signUpValidate} from "../../../utilis/validation";
+import { signUpValidate } from "../../../utilis/validation";
+import {
+  doCreateUserWithEmailAndPassword,
+  doSignInWithGoogle,
+} from "../../../firebase/auth";
+import SignUpGoogleButton from "./SignUpGoogleButton";
 
-const SignUp = ({ switchMode }) => {
+const SignUp = ({ switchMode, onClose }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
+  const [isRegistering, setIsRegistering] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -23,62 +28,87 @@ const SignUp = ({ switchMode }) => {
     setErrors(signUpValidate(updatedForm));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = signUpValidate(formData);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      alert("Form submitted successfully ✅");
+      if (!isRegistering) {
+        try {
+          const { username, email, password } = formData;
+          setIsRegistering(true);
+          await doCreateUserWithEmailAndPassword(username, email, password);
+          onClose();
+        } catch (error) {
+          console.log(error.message);
+          setIsRegistering(false);
+        }
+      }
+    }
+  };
+
+  const onGoogleSignIn = async () => {
+    if (!isRegistering) {
+      try {
+        setIsRegistering(true);
+        await doSignInWithGoogle();
+        onClose();
+      } catch (error) {
+        setIsRegistering(false);
+        console.log(error);
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="my-5">
-      <SignUpHeader />
+    <div>
+      <form onSubmit={handleSubmit} className="my-5">
+        <SignUpHeader />
 
-      <div className="mt-8">
-        <InputField
-          label="Name"
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          error={errors.username}
-          placeholder="Name"
-        />
+        <div className="mt-8">
+          <InputField
+            label="Name"
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            error={errors.username}
+            placeholder="Name"
+          />
 
-        <InputField
-          label="Email"
-          type="text"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          error={errors.email}
-          placeholder="Email"
-        />
+          <InputField
+            label="Email"
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+            placeholder="Email"
+          />
 
-        <PasswordField
-          label="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          errors={errors.password}
-          placeholder="Password"
-        />
+          <PasswordField
+            label="Password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            errors={errors.password}
+            placeholder="Password"
+          />
 
-        <PasswordField
-          label="Confirm Password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          errors={errors.confirmPassword}
-          placeholder="Confirm Password"
-        />
-
-        <SignUpButtons />
-        <SignUpFooter switchMode={switchMode} />
-      </div>
-    </form>
+          <PasswordField
+            label="Confirm Password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            errors={errors.confirmPassword}
+            placeholder="Confirm Password"
+          />
+          <SignUpButton />
+        </div>
+      </form>
+      <SignUpGoogleButton doCreateUserWithGoogle={onGoogleSignIn} />
+      <SignUpFooter switchMode={switchMode} />
+    </div>
   );
 };
 

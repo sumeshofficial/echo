@@ -5,14 +5,16 @@ import NotFound from "./components/NotFound";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/"  element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="*" element={<NotFound />}/>
-        </Route>
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 

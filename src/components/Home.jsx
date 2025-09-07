@@ -1,7 +1,9 @@
+import { useAuth } from "../utilis/constants";
+
 const Home = () => {
-    return (
-        <h2>Home</h2>
-    )
-}
+  const { currentUser } = useAuth();
+  const {displayName} = currentUser || "";
+  return <h2>Welcome {displayName}</h2>;
+};
 
 export default Home;

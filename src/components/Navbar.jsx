@@ -19,6 +19,8 @@ import { Link, useLocation } from "react-router";
 import Modal from "./Modal";
 import SingIn from "./Auth/SignIn/SingIn";
 import SingUp from "./Auth/SignUp/SignUp";
+import { useAuth } from "../utilis/constants";
+import { doSignOut } from "../firebase/auth";
 
 const navigation = [
   { name: "Dashboard", href: "/" },
@@ -32,6 +34,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const { userLoggedIn } = useAuth();
   const location = useLocation();
   const [theme, setTheme] = useState("light");
   const [showModal, setModal] = useState(false);
@@ -158,30 +161,44 @@ export default function Navbar() {
                       Settings
                     </a>
                   </MenuItem>
-                  <MenuItem>
-                    <button
-                      onClick={() => {
-                        setAuthMode("signup");
-                        setModal(true);
-                      }}
-                      type="button"
-                      className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                    >
-                      Sign up
-                    </button>
-                  </MenuItem>
-                  <MenuItem>
-                    <button
-                      onClick={() => {
-                        setAuthMode("signin");
-                        setModal(true);
-                      }}
-                      type="button"
-                      className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                    >
-                      Sign in
-                    </button>
-                  </MenuItem>
+                  {userLoggedIn !== true ? (
+                    <>
+                      <MenuItem>
+                        <button
+                          onClick={() => {
+                            setAuthMode("signup");
+                            setModal(true);
+                          }}
+                          type="button"
+                          className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        >
+                          Sign up
+                        </button>
+                      </MenuItem>
+                      <MenuItem>
+                        <button
+                          onClick={() => {
+                            setAuthMode("signin");
+                            setModal(true);
+                          }}
+                          type="button"
+                          className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        >
+                          Sign in
+                        </button>
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <MenuItem>
+                      <button
+                        onClick={doSignOut}
+                        type="button"
+                        className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                      >
+                        Logout
+                      </button>
+                    </MenuItem>
+                  )}
                 </MenuItems>
               </Menu>
             </div>
@@ -213,9 +230,15 @@ export default function Navbar() {
       {showModal && (
         <Modal open={showModal} onClose={() => setModal(false)}>
           {authMode === "signin" ? (
-            <SingIn switchMode={() => setAuthMode("signup")} />
+            <SingIn
+              switchMode={() => setAuthMode("signup")}
+              onClose={() => setModal(false)}
+            />
           ) : (
-            <SingUp switchMode={() => setAuthMode("signin")} />
+            <SingUp
+              switchMode={() => setAuthMode("signin")}
+              onClose={() => setModal(false)}
+            />
           )}
         </Modal>
       )}
