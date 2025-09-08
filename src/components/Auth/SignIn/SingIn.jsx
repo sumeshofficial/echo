@@ -11,12 +11,16 @@ import {
 } from "../../../firebase/auth";
 import SignInGoogleButton from "./SignInGoogleButton";
 import { getError } from "../../../utilis/errorHandler";
+import ForgotPassword from "../Forgot/ForgotPassword";
+import Modal from "../../Modal";
+import { Link } from "react-router";
 
 const SignIn = ({ switchMode, onClose }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,15 +83,28 @@ const SignIn = ({ switchMode, onClose }) => {
           />
 
           <div className="mt-3 flex justify-end">
-            <button className="font-medium text-base text-violet-500">
+            <Link
+              onClick={() => {
+                setModal(true);
+              }}
+              className="font-medium text-base text-violet-500"
+            >
               Forgot password?
-            </button>
+            </Link>
           </div>
           <SignInButton />
         </div>
       </form>
       <SignInGoogleButton signInWithGoogle={onGoogleSignIn} />
       <SignInFooter switchMode={switchMode} />
+
+      {showModal && (
+        <Modal open={showModal} onClose={() => setModal(false)}>
+            <ForgotPassword
+              onClose={() => setModal(false)}
+            />
+        </Modal>
+      )}
     </div>
   );
 };
