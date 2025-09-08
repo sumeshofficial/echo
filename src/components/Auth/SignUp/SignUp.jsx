@@ -10,6 +10,7 @@ import {
   doSignInWithGoogle,
 } from "../../../firebase/auth";
 import SignUpGoogleButton from "./SignUpGoogleButton";
+import { getError } from "../../../utilis/errorHandler";
 
 const SignUp = ({ switchMode, onClose }) => {
   const [formData, setFormData] = useState({
@@ -20,12 +21,14 @@ const SignUp = ({ switchMode, onClose }) => {
   });
   const [isRegistering, setIsRegistering] = useState(false);
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedForm = { ...formData, [name]: value };
     setFormData(updatedForm);
     setErrors(signUpValidate(updatedForm));
+    setErrorMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -39,8 +42,8 @@ const SignUp = ({ switchMode, onClose }) => {
           setIsRegistering(true);
           await doCreateUserWithEmailAndPassword(username, email, password);
           onClose();
-        } catch (error) {
-          console.log(error.message);
+        } catch (err) {
+          setErrorMessage(getError(err.message));
           setIsRegistering(false);
         }
       }
@@ -64,7 +67,9 @@ const SignUp = ({ switchMode, onClose }) => {
     <div>
       <form onSubmit={handleSubmit} className="my-5">
         <SignUpHeader />
-
+        {errorMessage && (
+          <p className="text-red-500 mt-2 text-sm">{errorMessage}</p>
+        )}
         <div className="mt-8">
           <InputField
             label="Name"

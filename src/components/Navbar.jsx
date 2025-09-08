@@ -34,7 +34,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const { userLoggedIn } = useAuth();
+  const { userLoggedIn, currentUser } = useAuth();
   const location = useLocation();
   const [theme, setTheme] = useState("light");
   const [showModal, setModal] = useState(false);
@@ -136,7 +136,7 @@ export default function Navbar() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={currentUser?.photoURL || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png"}
                     className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                   />
                 </MenuButton>
