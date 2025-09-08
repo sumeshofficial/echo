@@ -92,7 +92,7 @@ const SignIn = ({ switchMode, onClose }) => {
               Forgot password?
             </Link>
           </div>
-          <SignInButton />
+          <SignInButton isSigningIn={isSigningIn}/>
         </div>
       </form>
       <SignInGoogleButton signInWithGoogle={onGoogleSignIn} />
