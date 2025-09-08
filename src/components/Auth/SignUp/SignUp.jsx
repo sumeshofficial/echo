@@ -108,7 +108,7 @@ const SignUp = ({ switchMode, onClose }) => {
             errors={errors.confirmPassword}
             placeholder="Confirm Password"
           />
-          <SignUpButton />
+          <SignUpButton isRegistering={isRegistering}/>
         </div>
       </form>
       <SignUpGoogleButton doCreateUserWithGoogle={onGoogleSignIn} />

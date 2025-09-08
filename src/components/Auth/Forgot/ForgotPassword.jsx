@@ -33,7 +33,7 @@ const ForgotPassword = () => {
         <form onSubmit={handleSubmit} className="my-5">
           <ForgotHeader />
           {errorMessage && (
-            <p className="text-red-500 mt-2 text-sm">{errorMessage}</p>
+            <p className="text-red-500 mt-2 text-lg text-center">{errorMessage}</p>
           )}
           <div className="mt-8">
             <ForgotInput
@@ -43,7 +43,7 @@ const ForgotPassword = () => {
                 setErrorMessage("");
               }}
             />
-            <ForgotButton />
+            <ForgotButton isForgot={isForgot}/>
           </div>
         </form>
       ) : (
