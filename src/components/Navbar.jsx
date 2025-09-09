@@ -22,6 +22,7 @@ import { LOGO, useAuth, USER_IMG, useTheme } from "../utilis/constants";
 import { doSignOut } from "../firebase/auth";
 import { Edit } from "lucide-react";
 import ModalContext from "../contexts/ModalContext";
+import PublishButton from "./BlogEdit/PublishButton";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -102,16 +103,10 @@ export default function Navbar({ nav, flag }) {
               )}
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
               {/* publish button */}
               {flag === "edit" && (
-                <button
-                  type="button"
-                  className="bg-green-600 hover:bg-green-700 active:scale-95 transition-all 
-               text-white text-sm font-medium px-3 py-1.5 
-               rounded-lg shadow-md"
-                >
-                  Publish
-                </button>
+                <PublishButton />
               )}
 
               {flag !== "edit" && (

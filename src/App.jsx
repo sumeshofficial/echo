@@ -3,11 +3,13 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import BlogEdit from "./components/BlogEdit/BlogEdit";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
       <Router>
+        <Toaster />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
