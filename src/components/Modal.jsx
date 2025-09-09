@@ -6,12 +6,15 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { useContext } from "react";
 import { X } from "react-feather";
+import ModalContext from "../contexts/ModalContext";
 
-export default function Modal({ open, onClose, children }) {
+export default function Modal({ children }) {
+  const { showModal, onClose } = useContext(ModalContext);
   return (
     <div>
-      <Dialog open={open} onClose={onClose} className="relative z-10">
+      <Dialog open={showModal} onClose={onClose} className="relative z-10">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900/50"

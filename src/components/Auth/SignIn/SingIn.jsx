@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { signInValidate } from "../../../utilis/validation";
 import SignInHeader from "./SignInHeader";
 import SignInButton from "./SignInButton";
@@ -14,13 +14,15 @@ import { getError } from "../../../utilis/errorHandler";
 import ForgotPassword from "../Forgot/ForgotPassword";
 import Modal from "../../Modal";
 import { Link } from "react-router";
+import ModalContext from "../../../contexts/ModalContext";
 
-const SignIn = ({ switchMode, onClose }) => {
+const SignIn = ({ switchMode }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setModal] = useState(false);
+  const { onClose } = useContext(ModalContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
