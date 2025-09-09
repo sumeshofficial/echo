@@ -1,28 +1,32 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import Navbar from "../Navbar";
 import BlogEditor from "./BlogEditor";
-import PublishForm from "./PublishForm";
+import EditorContext from "../../contexts/EditorContext";
 
 const blogStructure = {
   title: "",
   content: [],
-  tags: [],
-  des: "",
+  createdAt: null,
   author: { personal_info: {} },
 };
 
-export const EditorContext = createContext();
-
 const BlogEdit = () => {
   const [blog, setBlog] = useState(blogStructure);
-  const [editorState, setEditorState] = useState("editor");
+  const [textEditor, setTextEditor] = useState({ isReady: false });
 
   const navigation = [];
   return (
     <div>
-      <Navbar nav={navigation} flag={"edit"} />
-      <EditorContext.Provider value={{blog, setBlog, editorState, setEditorState}}>
-        {editorState === "editor" ? <BlogEditor /> : <PublishForm />}
+      <EditorContext.Provider
+        value={{
+          blog,
+          setBlog,
+          textEditor,
+          setTextEditor,
+        }}
+      >
+        <Navbar nav={navigation} flag={"edit"} />
+        <BlogEditor />
       </EditorContext.Provider>
     </div>
   );

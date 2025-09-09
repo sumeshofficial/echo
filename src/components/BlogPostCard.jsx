@@ -1,18 +1,47 @@
-import { useAuth, USER_IMG, useTheme } from "../utilis/constants";
+import { USER_IMG, useTheme } from "../utilis/constants";
 
-const BlogPostCard = () => {
+const BlogPostCard = ({ blog }) => {
   const { theme } = useTheme();
-  const { currentUser } = useAuth();
-  const name = currentUser?.displayName;
-  const email = currentUser?.email;
-  const index = email?.indexOf("@");
-  const username = email?.slice(0, index);
+  const name = blog.author.personal_info?.fullname;
+  const username = blog.author.personal_info?.username;
+  const user_img = blog.author.personal_info?.user_img || USER_IMG(theme);
+
+  // Convert Firestore Timestamp → readable date
+  const createdAt = blog.createdAt?.toDate().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <div className="">
-      <div className="flex gap-2 items-center mb-7">
-        <img src={USER_IMG(theme)} className="w-6 h-6 rounded-full" />
-        <p className="line-clamp-1 text-black dark:text-white">{name} @{username}</p>
-        <p className="min-w-fit"></p>
+    <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700">
+      {/* Author Info */}
+      <div className="flex items-center gap-2 sm:gap-3 mb-4">
+        <img
+          src={user_img}
+          alt="Author"
+          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
+        />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 min-w-0">
+          <p className="truncate max-w-[120px] sm:max-w-[200px] text-sm sm:text-base font-medium text-black dark:text-white">
+            {name}
+          </p>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
+            @{username}
+          </p>
+          {createdAt && (
+            <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-500">
+              • {createdAt}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Blog title */}
+      <div>
+        <h2 className="text-base sm:text-lg font-semibold text-black dark:text-white line-clamp-2">
+          {blog.title}
+        </h2>
       </div>
     </div>
   );
