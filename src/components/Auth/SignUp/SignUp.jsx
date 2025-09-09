@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "./InputField";
 import PasswordField from "./PasswordField";
 import SignUpHeader from "./SignUpHeader";
@@ -11,8 +11,9 @@ import {
 } from "../../../firebase/auth";
 import SignUpGoogleButton from "./SignUpGoogleButton";
 import { getError } from "../../../utilis/errorHandler";
+import ModalContext from "../../../contexts/ModalContext";
 
-const SignUp = ({ switchMode, onClose }) => {
+const SignUp = ({ switchMode }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -22,6 +23,7 @@ const SignUp = ({ switchMode, onClose }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const { onClose } = useContext(ModalContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

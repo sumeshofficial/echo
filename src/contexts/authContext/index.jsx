@@ -39,5 +39,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
-AuthProvider.jsx

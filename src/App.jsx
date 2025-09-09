@@ -1,17 +1,24 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router";
-import MainLayout from "./components/MainLayout";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
+import BlogEdit from "./components/BlogEdit/BlogEdit";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/edit-blog"
+            element={
+              <ProtectedRoute>
+                <BlogEdit />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>
