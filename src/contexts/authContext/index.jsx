@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
 import AuthContext from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
@@ -10,12 +10,25 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
+
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          const user = result.user;
+          setCurrentUser(user);
+          setUserLoggedIn(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Google redirect error:", error);
+      });
+
     return unsubscribe;
   }, []);
 
-  const initializeUser = async (user) => {
+  const initializeUser = (user) => {
     if (user) {
-      setCurrentUser({ ...user });
+      setCurrentUser(user);
       setUserLoggedIn(true);
     } else {
       setCurrentUser(null);
