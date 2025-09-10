@@ -11,7 +11,7 @@ import {
 } from "../../../firebase/auth";
 import SignUpGoogleButton from "./SignUpGoogleButton";
 import { getError } from "../../../utilis/errorHandler";
-import ModalContext from "../../../contexts/ModalContext";
+import ModalContext from "../../../contexts/modalContext/ModalContext";
 
 const SignUp = ({ switchMode }) => {
   const [formData, setFormData] = useState({

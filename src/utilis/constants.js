@@ -1,7 +1,6 @@
 import { useContext } from "react";
-import AuthContext from "../contexts/authContext/Index";
-import ThemeProvider from "../contexts/ThemeContext";
-import ThemeContext from "../contexts/ThemeContext";
+import AuthContext from "../contexts/authContext/AuthContext";
+import ThemeContext from "../contexts/themeContext/ThemeContext";
 
 export const useAuth = () => {
   return useContext(AuthContext);

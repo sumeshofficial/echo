@@ -1,6 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import ThemeContext from "./ThemeContext";
 
-const ThemeContext = createContext();
+
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
@@ -11,7 +12,6 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.classList.toggle("dark", storedTheme === "dark");
   }, []);
 
-  // Toggle theme function
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -25,5 +25,3 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export default ThemeContext;

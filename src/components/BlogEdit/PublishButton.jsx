@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { EditorContext } from "./BlogEdit";
 import { useAuth } from "../../utilis/constants";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { serverTimestamp } from "firebase/firestore";
+import EditorContext from "../../contexts/EditorContext";
+import getUniqueSlug from "../../utilis/getUniqueSlug";
 
 const PublishButton = () => {
   const [loading, setLoading] = useState(false);
@@ -17,12 +18,13 @@ const PublishButton = () => {
   const index = email?.indexOf("@");
   const username = email?.slice(0, index);
   const {
-    blog: { title },
+    blog: { title, des },
     setBlog,
     blog,
     textEditor,
   } = useContext(EditorContext);
   const navigate = useNavigate();
+  const { blog_id } = useParams();
 
   const slug = title
     .toLowerCase()
@@ -41,24 +43,32 @@ const PublishButton = () => {
 
     if (textEditor.isReady) {
       try {
+        if (!des.length) {
+          return toast.error("Write blog description to publish it");
+        }
         if (loading) return;
         setLoading(true);
         const data = await textEditor.save();
         if (data.blocks.length) {
+          const uniqueSlug = blog_id || await getUniqueSlug(slug);
           const newBlog = {
             ...blog,
             content: data,
             createdAt: serverTimestamp(),
-            slug,
+            uniqueSlug,
             author: {
               personal_info: { uid, fullname, username, user_img },
             },
           };
-          setBlog(newBlog);
-          await setDoc(doc(db, "blogs", slug), newBlog);
+          if (blog_id) {
+            await setDoc(doc(db, "blogs", blog_id), newBlog, { merge: true });
+          } else {
+            setBlog(newBlog);
+            await setDoc(doc(db, "blogs", uniqueSlug), newBlog);
+          }
 
           toast.success("Your blog is published");
-          navigate(`/`);
+          navigate(`/blog/${uniqueSlug}`);
         } else {
           return toast.error("Write something in your blog to publish it");
         }

@@ -14,7 +14,7 @@ import { getError } from "../../../utilis/errorHandler";
 import ForgotPassword from "../Forgot/ForgotPassword";
 import Modal from "../../Modal";
 import { Link } from "react-router";
-import ModalContext from "../../../contexts/ModalContext";
+import ModalContext from "../../../contexts/modalContext/ModalContext";
 
 const SignIn = ({ switchMode }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });

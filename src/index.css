@@ -13,6 +13,11 @@
   vertical-align: middle;
 }
 
+.loading .loader {
+   width: 50px;
+   height: 50px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -34,46 +39,37 @@
 
 }
 
-@keyframes progressbar {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 0%;
-  }
-}
-
-.ce-block h1 {
+.ce-block h1, h1 {
   font-size: 2.25rem;   
   font-weight: 700;
   margin: 1.25rem 0;
 }
 
-.ce-block h2 {
+.ce-block h2, h2 {
   font-size: 1.875rem;  
   font-weight: 700;
   margin: 1rem 0;
 }
 
-.ce-block h3 {
+.ce-block h3, h3 {
   font-size: 1.5rem;    
   font-weight: 600;
   margin: 0.75rem 0;
 }
 
-.ce-block h4 {
+.ce-block h4, h4 {
   font-size: 1.25rem;   
   font-weight: 600;
   margin: 0.5rem 0;
 }
 
-.ce-block h5 {
+.ce-block h5, h5 {
   font-size: 1.125rem;  
   font-weight: 600;
   margin: 0.5rem 0;
 }
 
-.ce-block h6 {
+.ce-block h6, h6 {
   font-size: 1rem;      
   font-weight: 600;
   margin: 0.5rem 0;

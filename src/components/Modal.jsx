@@ -8,13 +8,13 @@ import {
 } from "@headlessui/react";
 import { useContext } from "react";
 import { X } from "react-feather";
-import ModalContext from "../contexts/ModalContext";
+import ModalContext from "../contexts/modalContext/ModalContext";
 
-export default function Modal({ children }) {
+export default function Modal({ open, close, children }) {
   const { showModal, onClose } = useContext(ModalContext);
   return (
     <div>
-      <Dialog open={showModal} onClose={onClose} className="relative z-10">
+      <Dialog open={open || showModal} onClose={close || onClose} className="relative z-10">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900/50"
@@ -27,7 +27,7 @@ export default function Modal({ children }) {
               className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 dark:bg-gray-800 dark:outline dark:-outline-offset-1 dark:outline-white/10"
             >
               <button
-                onClick={onClose}
+                onClick={close || onClose}
                 className="absolute top-2 right-2 p-1 rounded-lg text-gray-400"
               >
                 <X />
