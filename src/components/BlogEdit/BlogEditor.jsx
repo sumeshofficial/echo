@@ -35,6 +35,8 @@ const BlogEditor = () => {
 
   const handleTitleChange = (e) => {
     let input = e.target;
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
 
     setBlog({ ...blog, title: input.value });
   };
@@ -65,7 +67,7 @@ const BlogEditor = () => {
           id="title"
           value={blog.title}
           placeholder="Title"
-          className="text-6xl font-medium w-full outline-none resize-none mt-5 leading-tight placeholder:opacity-40 dark:text-white"
+          className="text-6xl font-medium w-full h-20 outline-none resize-none mt-5 leading-tight placeholder:opacity-40 dark:text-white"
           onKeyDown={handleKeyDown}
           onChange={handleTitleChange}
         ></textarea>
