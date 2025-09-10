@@ -7,7 +7,6 @@ import { getDate } from "../../utilis/date";
 import Navbar from "../Navbar";
 import BlogContent from "./BlogContent";
 import { Loader } from "react-feather";
-import ModalContext from "../../contexts/modalContext/ModalContext";
 import Modal from "../Modal";
 import toast from "react-hot-toast";
 

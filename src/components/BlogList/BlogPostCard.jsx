@@ -40,7 +40,7 @@ const BlogPostCard = ({ blog}) => {
 
         <h3 className="blog-title dark:text-white">{title}</h3>
 
-        <p className="my-3 text-xl leading-7 max-sm:hidden md-max-[1100px]:hidden line-clamp-2 dark:text-white">
+        <p className="my-3 text-base leading-7 max-sm:hidden md-max-[1100px]:hidden line-clamp-2 dark:text-white">
           {des}
         </p>
       </div>
