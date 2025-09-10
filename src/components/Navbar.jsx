@@ -21,7 +21,7 @@ import SingUp from "./Auth/SignUp/SignUp";
 import { LOGO, useAuth, USER_IMG, useTheme } from "../utilis/constants";
 import { doSignOut } from "../firebase/auth";
 import { Edit } from "lucide-react";
-import ModalContext from "../contexts/ModalContext";
+import ModalContext from "../contexts/modalContext/ModalContext";
 import PublishButton from "./BlogEdit/PublishButton";
 
 function classNames(...classes) {
@@ -32,7 +32,7 @@ export default function Navbar({ nav, flag }) {
   const { userLoggedIn, currentUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
-  const { showModal, setModal} = useContext(ModalContext)
+  const { showModal, setModal } = useContext(ModalContext);
   const [authMode, setAuthMode] = useState("signin");
   const user_img = currentUser?.photoURL || USER_IMG(theme);
   const logo = LOGO(theme);
@@ -103,11 +103,8 @@ export default function Navbar({ nav, flag }) {
               )}
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
               {/* publish button */}
-              {flag === "edit" && (
-                <PublishButton />
-              )}
+              {flag === "edit" && <PublishButton />}
 
               {flag !== "edit" && (
                 <Link
@@ -225,13 +222,9 @@ export default function Navbar({ nav, flag }) {
       {showModal && (
         <Modal>
           {authMode === "signin" ? (
-            <SingIn
-              switchMode={() => setAuthMode("signup")}
-            />
+            <SingIn switchMode={() => setAuthMode("signup")} />
           ) : (
-            <SingUp
-              switchMode={() => setAuthMode("signin")}
-            />
+            <SingUp switchMode={() => setAuthMode("signin")} />
           )}
         </Modal>
       )}
