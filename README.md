@@ -9,30 +9,30 @@ It allows users to create, edit, responsive, and user-friendly interface.
 
 ## 🚀 Features
 
-- 🔐 **Authentication**
+- **Authentication**
   - Email & Password Sign Up / Sign In
   - Google Sign-In (with Popup flow)
   - Password reset
 
-- ✍️ **Blog Management**
+- **Blog Management**
   - Create new blog posts
   - Edit existing blogs
   - Delete your own blogs
   - View blogs from other users
 
-- 🎨 **UI/UX**
+-  **UI/UX**
   - Responsive design with Tailwind CSS
   - Dark/Light theme support
   - Toast notifications for feedback
 
-- ⚡ **Tech Highlights**
+- **Tech Highlights**
   - Protected routes with React Router
   - Firebase Hosting + Firestore Database
   - Context API for Auth, Theme, and Modal management
 
 ---
 
-## 🛠️ Tech Stack
+## **Tech Stack**
 
 **Frontend:** React, Tailwind CSS, React Router, Context API  
 **Backend/Database:** Firebase (Auth + Firestore)  
