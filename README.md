@@ -76,7 +76,7 @@ cd echo-blog
 npm install
 ```
 
-##Configure Firebase
+## Configure Firebase
 
  - Create a Firebase project in Firebase Console
 
