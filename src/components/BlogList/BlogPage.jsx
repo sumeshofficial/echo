@@ -133,8 +133,8 @@ const BlogPage = () => {
         {showModal && (
           <Modal open={showModal} close={() => setModal(false)}>
             <div className="p-6 text-center">
-              <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
-              <p>Are you sure you want to delete this blog?</p>
+              <h2 className="text-xl font-semibold mb-4 dark:text-white">Confirm Delete</h2>
+              <p className="dark:text-white">Are you sure you want to delete this blog?</p>
               <div className="flex justify-center gap-4 mt-6">
                 <button
                   onClick={() => setModal(false)}
