@@ -191,6 +191,25 @@ export default function Navbar({ nav, flag }) {
                       </button>
                     </MenuItem>
                   )}
+
+                  {flag !== "edit" && (
+                    <MenuItem>
+                      <Link
+                        to={currentUser ? "/edit-blog" : "#"}
+                        onClick={(e) => {
+                          if (!currentUser) {
+                            e.preventDefault();
+                            setAuthMode("signin");
+                            setModal(true);
+                          }
+                        }}
+                        className="md:hidden flex ms-3 mb-5 mt-3 dark:text-gray-400"
+                      >
+                        <Edit className="w-6 h-6 me-1.5" />
+                        <span className="text-base">Write</span>
+                      </Link>
+                    </MenuItem>
+                  )}
                 </MenuItems>
               </Menu>
             </div>
