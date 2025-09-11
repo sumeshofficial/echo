@@ -20,7 +20,7 @@ It allows users to create, edit, responsive, and user-friendly interface.
   - Delete your own blogs
   - View blogs from other users
 
--  **UI/UX**
+- **UI/UX**
   - Responsive design with Tailwind CSS
   - Dark/Light theme support
   - Toast notifications for feedback
