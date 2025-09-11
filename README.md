@@ -19,6 +19,12 @@ It allows users to create, edit, responsive, and user-friendly interface.
   - Edit existing blogs
   - Delete your own blogs
   - View blogs from other users
+  
+- **Blog Management**
+  - Create new blog posts
+  - Edit existing blogs
+  - Delete your own blogs
+  - View blogs from other users
 
 - **UI/UX**
   - Responsive design with Tailwind CSS
