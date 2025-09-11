@@ -7,7 +7,7 @@ It allows users to create, edit, responsive, and user-friendly interface.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Authentication**
   - Email & Password Sign Up / Sign In
@@ -40,7 +40,7 @@ It allows users to create, edit, responsive, and user-friendly interface.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 echo-blog/
@@ -64,9 +64,9 @@ echo-blog/
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
-### 1️⃣ Clone the repo
+### Clone the repo
 ```bash
 git clone https://github.com/your-username/echo-blog.git
 cd echo-blog
