@@ -47,9 +47,7 @@ const BlogPage = () => {
         if (!querySnapshot.empty) {
           const docData = querySnapshot.docs[0];
           setBlog({ id: docData.id, ...docData.data() });
-          console.log(docData.data().author.personal_info.username);
         } else {
-          console.log("Blog not found for slug:", blog_id);
           setBlog(null);
         }
       } catch (error) {
