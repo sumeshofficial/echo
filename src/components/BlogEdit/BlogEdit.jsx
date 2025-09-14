@@ -8,6 +8,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const blogStructure = {
+  activity: {
+    total_likes: 0,
+    total_comments: 0,
+  },
+  likes: {},
   title: "",
   content: [],
   des: "",
@@ -63,10 +68,12 @@ const BlogEdit = () => {
       >
         <Navbar nav={navigation} flag={"edit"} />
         {loading ? (
-            <div className="w-full h-11/12 flex justify-center items-center loading">
-              <Loader className="loader"></Loader>
-            </div>
-          ) : <BlogEditor />}
+          <div className="w-full h-11/12 flex justify-center items-center loading">
+            <Loader className="loader"></Loader>
+          </div>
+        ) : (
+          <BlogEditor />
+        )}
       </EditorContext.Provider>
     </div>
   );
