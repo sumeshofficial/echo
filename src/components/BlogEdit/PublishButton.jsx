@@ -37,41 +37,63 @@ const PublishButton = () => {
       return toast.error("You must be logged in to publish a blog");
     }
 
-    if (!title.length) {
+    if (!title.trim().length) {
       return toast.error("Write blog title to publish it");
     }
 
     if (textEditor.isReady) {
       try {
-        if (!des.length) {
+        if (!des.trim().length) {
           return toast.error("Write blog description to publish it");
         }
         if (loading) return;
         setLoading(true);
         const data = await textEditor.save();
-        if (data.blocks.length) {
-          const uniqueSlug = blog_id || await getUniqueSlug(slug);
-          const newBlog = {
-            ...blog,
-            content: data,
-            createdAt: serverTimestamp(),
-            uniqueSlug,
-            author: {
-              personal_info: { uid, fullname, username, user_img },
-            },
-          };
-          if (blog_id) {
-            await setDoc(doc(db, "blogs", blog_id), newBlog, { merge: true });
-          } else {
-            setBlog(newBlog);
-            await setDoc(doc(db, "blogs", uniqueSlug), newBlog);
+
+        const isBlockEmpty = (block) => {
+          if (block?.type === "paragraph" || block?.type === "header") {
+            const text = block.data?.text?.replace(/&nbsp;/g, " ").replace(/<[^>]+>/g, "").trim();
+            return text.length === 0;
           }
 
-          toast.success("Your blog is published");
-          navigate(`/blog/${uniqueSlug}`);
-        } else {
-          return toast.error("Write something in your blog to publish it");
+          if (block.type === "list") {
+            return Array.isArray(block?.data?.items) || block?.data?.items?.some(
+              (item) => item.replace(/&nbsp;/g, " ").replace(/<[^>]+>/g, "").trim().length > 0
+            );
+          }
+
+          if (block?.type === "code") {
+            return block?.data?.code?.trim().replace(/<[^>]+>/g, "").length;
+          }
+
+          return true;
+        };
+
+        if (data.blocks.length === 0 || isBlockEmpty(data.blocks[0])) {
+          toast.error("Write something in your blog to publish it");
+          setLoading(false);
+          return;
         }
+
+        const uniqueSlug = blog_id || (await getUniqueSlug(slug));
+        const newBlog = {
+          ...blog,
+          content: data,
+          createdAt: serverTimestamp(),
+          uniqueSlug,
+          author: {
+            personal_info: { uid, fullname, username, user_img },
+          },
+        };
+        if (blog_id) {
+          await setDoc(doc(db, "blogs", blog_id), newBlog, { merge: true });
+        } else {
+          setBlog(newBlog);
+          await setDoc(doc(db, "blogs", uniqueSlug), newBlog);
+        }
+
+        toast.success("Your blog is published");
+        navigate(`/blog/${uniqueSlug}`);
       } catch (error) {
         console.log(error);
       } finally {

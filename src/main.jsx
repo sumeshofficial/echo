@@ -7,7 +7,7 @@ import { ThemeProvider } from "./contexts/themeContext/ThemeProvider.jsx";
 import { ModalProvider } from "./contexts/modalContext/ModalProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <AuthProvider>
       <ThemeProvider>
           <ModalProvider>
@@ -15,5 +15,5 @@ createRoot(document.getElementById("root")).render(
           </ModalProvider>
       </ThemeProvider>
     </AuthProvider>
-  </StrictMode>
+  // </StrictMode>
 );

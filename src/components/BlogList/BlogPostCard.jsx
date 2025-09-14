@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { USER_IMG, useTheme } from "../../utilis/constants";
 import { getDate } from "../../utilis/date";
-import { Option } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const BlogPostCard = ({ blog}) => {
   const { theme } = useTheme();
@@ -10,6 +10,7 @@ const BlogPostCard = ({ blog}) => {
   const user_img = blog.author.personal_info?.user_img || USER_IMG(theme);
   const title = blog?.title;
   const des = blog?.des;
+  const total_likes = blog?.activity?.total_likes;
 
   // Convert Firestore Timestamp → readable date
   const createdAt = blog.createdAt?.toDate().toLocaleDateString("en-US", {
@@ -43,6 +44,14 @@ const BlogPostCard = ({ blog}) => {
         <p className="my-3 text-base leading-7 max-sm:hidden md-max-[1100px]:hidden line-clamp-2 dark:text-white">
           {des}
         </p>
+
+        <div className="mt-2">
+          <span className=" w-9 h-9 flex items-center gap-2 text-gray-500 dark:text-gray-400">
+            <Heart />
+            { total_likes }
+          </span>
+        </div>
+
       </div>
     </Link>
   );
