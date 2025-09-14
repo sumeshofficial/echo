@@ -49,6 +49,7 @@ const BlogPage = () => {
           setBlog({ id: docData.id, ...docData.data() });
         } else {
           setBlog(null);
+          navigate('/error');
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
