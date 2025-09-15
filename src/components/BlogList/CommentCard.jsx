@@ -99,7 +99,7 @@ const CommentCard = ({
                 className={`px-3 py-1 rounded-md text-white ${
                   editInput.trim() === comment.comment.trim()
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-black hover:bg-gray-900 dark:bg-white dark:text-black"
+                    : "bg-black hover:bg-gray-900 dark:hover:bg-gray-100 dark:bg-white dark:text-black"
                 }`}
               >
                 Save
