@@ -1,38 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { auth } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import AuthContext from "./AuthContext";
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "currentUser":
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+    case "userLoggedIn":
+      return {
+        ...state,
+        userLoggedIn: action.payload,
+      };
+    case "loading":
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, {
+    currentUser: null,
+    userLoggedIn: false,
+    loading: true,
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
+
     return unsubscribe;
   }, []);
 
-  const initializeUser = async (user) => {
+  const initializeUser = (user) => {
     if (user) {
-      setCurrentUser({ ...user });
-      setUserLoggedIn(true);
+      dispatch({ type: "currentUser", payload: { ...user } });
+      dispatch({ type: "userLoggedIn", payload: true });
     } else {
-      setCurrentUser(null);
-      setUserLoggedIn(false);
+      dispatch({ type: "currentUser", payload: null });
+      dispatch({ type: "userLoggedIn", payload: false });
     }
-    setLoading(false);
+    dispatch({ type: "loading", payload: false });
   };
 
   const value = {
-    currentUser,
-    userLoggedIn,
-    loading,
+    currentUser: state.currentUser,
+    userLoggedIn: state.userLoggedIn,
+    loading: state.loading,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!state.loading && children}
     </AuthContext.Provider>
   );
 };

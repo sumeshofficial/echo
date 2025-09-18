@@ -19,6 +19,7 @@ const MyBlogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    
     const fetchBlogs = async () => {
       try {
         const q = query(
@@ -52,7 +53,7 @@ const MyBlogs = () => {
               <Loader className="loader"></Loader>
             </div>
           ) : blogs.length ? (
-            blogs.map((blog) => <BlogPostCard key={blog.id} blog={blog} />)
+            blogs.map((blog) => <BlogPostCard key={blog.id} blogData={blog} />)
           ) : (
             <h2 className="dark:text-white">No Blogs Available</h2>
           )}
