@@ -43,19 +43,23 @@ const CommentField = ({ setComments, setBlog, blog, action }) => {
         createdAt: new Date().toISOString(),
       };
 
-      await updateDoc(blogRef, {
-        comments: arrayUnion(newComment),
-        "activity.total_comments": increment(1),
-      });
+      try {
+        await updateDoc(blogRef, {
+          comments: arrayUnion(newComment),
+          "activity.total_comments": increment(1),
+        });
 
-      setComments((prev) => [...prev, newComment]);
-      setBlog({
-        ...blog,
-        activity: { ...activity, total_comments: total_comments + 1 },
-      });
+        setComments((prev) => [...prev, newComment]);
+        setBlog({
+          ...blog,
+          activity: { ...activity, total_comments: total_comments + 1 },
+        });
 
-      toast.success("Comment added!");
-      setCommentInput("");
+        toast.success("Comment added!");
+        setCommentInput("");
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.error("Error adding comment:", error);
       toast.error("Failed to add comment");
@@ -85,4 +89,3 @@ const CommentField = ({ setComments, setBlog, blog, action }) => {
 };
 
 export default CommentField;
- 

@@ -11,7 +11,7 @@ import getUniqueSlug from "../../utilis/getUniqueSlug";
 const PublishButton = () => {
   const [loading, setLoading] = useState(false);
   const { currentUser } = useAuth();
-  const fullname = currentUser?.displayName || currentUser?.username;
+  const fullname = currentUser?.displayName;
   const uid = currentUser?.uid;
   const user_img = currentUser?.photoURL;
   const email = currentUser?.email;
@@ -33,6 +33,9 @@ const PublishButton = () => {
     .replace(/\s+/g, "-");
 
   const handlePublish = async () => {
+
+    console.log(currentUser);
+    console.log(currentUser?.displayName);
     if (!currentUser) {
       return toast.error("You must be logged in to publish a blog");
     }

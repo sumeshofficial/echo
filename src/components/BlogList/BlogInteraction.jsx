@@ -22,18 +22,22 @@ const BlogInteraction = ({
   let total_likes = blog?.activity?.total_likes;
 
   useEffect(() => {
-    const fetchLikeStatus = async () => {
-      if (!currentUser || !blog_id) return;
-      const blogRef = doc(db, "blogs", blog_id);
+    try {
+      const fetchLikeStatus = async () => {
+        if (!currentUser || !blog_id) return;
+        const blogRef = doc(db, "blogs", blog_id);
 
-      const data = await getDoc(blogRef);
-      const stat = data.data()?.likes[userId];
+        const data = await getDoc(blogRef);
+        const stat = data.data()?.likes[userId];
 
-      if (stat) {
-        setLikedByUser(stat);
-      }
-    };
-    fetchLikeStatus();
+        if (stat) {
+          setLikedByUser(stat);
+        }
+      };
+      fetchLikeStatus();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, [currentUser, blog_id]);
 
   const handleLike = async () => {
@@ -56,18 +60,22 @@ const BlogInteraction = ({
 
       const blogRef = doc(db, "blogs", blog_id);
 
-      await updateDoc(blogRef, {
-        "activity.total_likes": increment(incValue),
-        [`likes.${userId}`]: !isLikedByUser,
-      });
+      try {
+        await updateDoc(blogRef, {
+          "activity.total_likes": increment(incValue),
+          [`likes.${userId}`]: !isLikedByUser,
+        });
 
-      setBlog((prev) => ({
-        ...prev,
-        activity: {
-          ...prev.activity,
-          total_likes: prev.activity.total_likes + incValue,
-        },
-      }));
+        setBlog((prev) => ({
+          ...prev,
+          activity: {
+            ...prev.activity,
+            total_likes: prev.activity.total_likes + incValue,
+          },
+        }));
+      } catch (error) {
+        console.log(error.message);
+      }
     } else {
       setModal(true);
       toast.error("Please login to like this blog");

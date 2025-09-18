@@ -24,6 +24,7 @@ const Home = () => {
           id: doc.id,
           ...doc.data(),
         }));
+
         setBlogs(blogsData);
         setLoading(false);
       } catch (error) {
@@ -43,8 +44,12 @@ const Home = () => {
             <div className="w-full h-11/12 flex justify-center items-center loading">
               <Loader className="loader" />
             </div>
+          ) : blogs.length ? (
+            blogs.map((blog) => (
+              <BlogPostCard setBlogs={setBlogs} key={blog.id} blogData={blog} />
+            ))
           ) : (
-            blogs.length ? blogs.map((blog) => <BlogPostCard key={blog.id} blog={blog} />) : (<h2 className="dark:text-white">No Blogs Available</h2>)
+            <h2 className="dark:text-white">No Blogs Available</h2>
           )}
         </div>
       </div>
