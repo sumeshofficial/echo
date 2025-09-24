@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  DialogTitle,
 } from "@headlessui/react";
 import { useContext } from "react";
 import { X } from "react-feather";
